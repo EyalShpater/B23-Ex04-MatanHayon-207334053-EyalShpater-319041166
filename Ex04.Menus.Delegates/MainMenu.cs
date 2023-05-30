@@ -9,14 +9,5 @@ namespace Ex04.Menus.Delegates
     {
         MenuItem m_MainMenu = new MenuItem();
 
-        public void stam()
-        {
-            m_MainMenu.MenuMethod += firstMenuFunc();
-        }
-
-        public void fisrtMenuFunc()
-        {
-
-        }
     }
 }

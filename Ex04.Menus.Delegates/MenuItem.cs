@@ -7,12 +7,29 @@ namespace Ex04.Menus.Delegates
 {
     internal class MenuItem
     {
-        string m_Name;
+        string m_Title;
         List<MenuItem> m_SubMenus;
-        Action MenuMethod;
         MenuItem m_PreviousMenu;
 
+        public event Action<MenuItem> WasChosen;
 
+        public string Title
+        {
+            get { return m_Title; }
+            set { m_Title = value; }
+        }
 
+        public MenuItem PreviousMenu
+        {
+            get { return m_PreviousMenu; }
+        }
+
+        private void OnWasChosen(MenuItem i_Item)
+        {
+            if (WasChosen == null)
+            {
+                WasChosen.Invoke(this);
+            }
+        }
     }
 }
