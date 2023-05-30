@@ -11,10 +11,18 @@ namespace Ex04.Menus.Delegates
 
         public event Action<MenuItem> Method;
 
-        public MenuItem(string i_Title,  MenuItem i_Parent)
+
+        public MenuItem(string i_Title, MenuItem i_Parent)
         {
             Title = i_Title;
+            Parent = i_Parent;
+        }
 
+        public MenuItem(string i_Title, MenuItem i_Parent, Action<MenuItem> i_Method)
+        {
+            Title = i_Title;
+            Parent = i_Parent;
+            Method += i_Method;
         }
 
         public string Title
@@ -39,7 +47,7 @@ namespace Ex04.Menus.Delegates
             OnItemClicked();
         }
 
-        public void AddSubMenu(string i_MenuTitle)
+        public void AddSubMenu(MenuItem i_Parent)
         {
             MenuItem newMenuItem = new MenuItem(i_MenuTitle, this);
             m_SubMenus.Add(newMenuItem);
@@ -105,3 +113,4 @@ namespace Ex04.Menus.Delegates
  * void function()
  * {
 }
+*/
