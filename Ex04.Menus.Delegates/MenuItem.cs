@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ex04.Menus.Delegates
 {
-    internal class MenuItem
+    public class MenuItem
     {
         string m_Title;
         List<MenuItem> m_SubMenus;
-        MenuItem m_PreviousMenu;
+        MenuItem m_Parent;
 
-        public event Action<MenuItem> WasChosen;
+        public event Action<MenuItem> Method;
+
+        public MenuItem(string i_Title,  MenuItem i_Parent)
+        {
+            Title = i_Title;
+
+        }
 
         public string Title
         {
@@ -19,17 +23,85 @@ namespace Ex04.Menus.Delegates
             set { m_Title = value; }
         }
 
-        public MenuItem PreviousMenu
+        public MenuItem Parent
         {
-            get { return m_PreviousMenu; }
+            get { return m_Parent; }
+            set { m_Parent = value; }
         }
 
-        private void OnWasChosen(MenuItem i_Item)
+        public MenuItem PreviousMenu
         {
-            if (WasChosen == null)
+            get { return m_Parent; }
+        }
+
+        public void ItemIsChosen()
+        {
+            OnItemClicked();
+        }
+
+        public void AddSubMenu(string i_MenuTitle)
+        {
+            MenuItem newMenuItem = new MenuItem(i_MenuTitle, this);
+            m_SubMenus.Add(newMenuItem);
+        }
+
+        protected virtual void OnItemClicked()
+        {
+            if (Method != null)
             {
-                WasChosen.Invoke(this);
+                Method.Invoke(this);
+            }
+            else
+            {
+                printSubMenusAndGetUserChoice();
             }
         }
+
+        private void printSubMenusAndGetUserChoice()
+        {
+            int userChoice;
+
+            Console.WriteLine(m_Title);
+            printMenus();
+            userChoice = getUserChoice();
+            m_SubMenus[userChoice - 1].ItemIsChosen();
+        }
+
+        private void printMenus()
+        {
+            Console.WriteLine(m_Title);
+            for(int i = 0; i < m_SubMenus.Count; i++)
+            {
+                Console.WriteLine($"{i}. {m_SubMenus[i].Title}");
+            }
+
+            Console.WriteLine("0. {0}", Parent == null ? "Exit" : "Back");
+        }
+
+        private int getUserChoice()
+        {
+            Console.WriteLine("Please enter your choice");
+            string input = Console.ReadLine();
+            
+            return int.Parse(input);
+        }
     }
+}
+
+
+
+
+
+/*
+ * 
+ * 
+ * 
+ * MenuItem item;
+ * 
+ * item.ItemClicked += function;
+ * 
+ * 
+ * 
+ * void function()
+ * {
 }
