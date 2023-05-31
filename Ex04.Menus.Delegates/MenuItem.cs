@@ -1,33 +1,149 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ex04.Menus.Delegates
 {
-    public class MenuItem : MainMenu
+    public class MenuItem 
     {
-        private Action m_Action;
+        private const int k_ReturnButton = 0;
+        private const char k_TitlesChar = '=';
+        protected List<MenuItem> m_SubMenus;
+        protected string m_Title;
+        public event Action Selected;
 
-        public MenuItem(string i_MenuName, Action i_Action) : base(i_MenuName)
+
+        public MenuItem(string i_Title) 
         {
-            m_Action = i_Action;
+            Title = i_Title;
+        }
+
+        public string Title
+        {
+            get 
+            { 
+                return m_Title; 
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    m_Title = value;
+                }
+                else
+                {
+                    throw new FormatException("Title cannot be empty!");
+                }
+            }
         }
 
         public void AddSubMenu(MenuItem i_MenuItem)
         {
-            m_MenuItems.Add(i_MenuItem);
+            if (m_SubMenus == null)
+            {
+                m_SubMenus = new List<MenuItem>();
+            }
+
+            m_SubMenus.Add(i_MenuItem);
         }
 
-
-        public void ItemIsChosen()
+        protected void RunMenu()
         {
-            if (m_Action != null)
+            if (m_SubMenus != null)
             {
-                m_Action.Invoke();
+                bool quit = false;
+
+                while (!quit)
+                {
+                    PrintMenu();
+                    int choice = GetUserChoice();
+                    if (choice == k_ReturnButton)
+                    {
+                        quit = true;
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        m_SubMenus[choice - 1].ItemIsChosen();
+                    }
+                }
             }
             else
             {
+                throw new FormatException("Cannot run an empty menu!");
+            }
+        }
+
+        protected int GetUserChoice()
+        {
+            int userChoice;
+            int i_MaxValue = m_SubMenus.Count();
+            string input;
+
+            Console.WriteLine("Please enter your choice:");
+            input = Console.ReadLine();
+            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > i_MaxValue)
+            {
+                Console.WriteLine("Invalid choice. Please try again:");
+                input = Console.ReadLine();
+            }
+
+            return userChoice;
+        }
+
+        protected void PrintMenu()
+        {
+            printAsTitle(m_Title);
+            for (int i = 0; i < m_SubMenus.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {m_SubMenus[i].Title}");
+            }
+
+            Console.WriteLine("{0}. {1}", k_ReturnButton, GetReturnButton());
+        }
+
+        protected virtual string GetReturnButton()
+        {
+            return "Back";
+        }
+
+        protected void ItemIsChosen()
+        {
+            if (m_SubMenus != null)
+            {
                 RunMenu();
             }
+            else
+            {
+                OnSelected();
+            }
+        }
+
+        protected void OnSelected()
+        {
+            if (Selected != null)
+            {
+                Selected.Invoke();
+            }
+        }
+
+        private static void printAsTitle(string i_FunctionName)
+        {
+            printLineOfSameChars(k_TitlesChar, i_FunctionName.Length);
+            Console.WriteLine(i_FunctionName);
+            printLineOfSameChars(k_TitlesChar, i_FunctionName.Length);
+        }
+
+        private static void printLineOfSameChars(char i_WantedChar, int i_NumOfPrintsInLine)
+        {
+            for (int i = 0; i < i_NumOfPrintsInLine; i++)
+            {
+                Console.Write(i_WantedChar);
+            }
+
+            Console.WriteLine();
         }
     }
 }
