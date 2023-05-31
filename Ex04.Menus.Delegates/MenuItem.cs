@@ -12,7 +12,6 @@ namespace Ex04.Menus.Delegates
         protected string m_Title;
         public event Action Selected;
 
-
         public MenuItem(string i_Title) 
         {
             Title = i_Title;
