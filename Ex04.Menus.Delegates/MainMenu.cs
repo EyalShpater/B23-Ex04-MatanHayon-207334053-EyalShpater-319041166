@@ -5,32 +5,85 @@ using System.Text;
 
 namespace Ex04.Menus.Delegates
 {
-    internal class MainMenu
+    public class MainMenu
     {
-        MenuItem m_Root;
-        string m_MainMenuName = "Main Menu";
-        //MenuItem m_MainMenu = new MenuItem();
+        protected List<MenuItem> m_MenuItems;
+        protected string m_MenuName;
+
+        public MainMenu(string i_MenuName)
+        {
+            m_MenuItems = new List<MenuItem>();
+            m_MenuName = i_MenuName;
+        }
+
+        public List<MenuItem> MenuItems
+        {
+            get { return m_MenuItems; }
+       //     set { m_MenuItems = value; } do we need?
+        }
+
+        public string MenuName
+        {
+            get { return m_MenuName; }
+            set { m_MenuName = value; }
+        }
 
         public void Show()
         {
-            m_Root.ItemIsChosen();
+            RunMenu();
+        }
 
+        public void AddComponent(MenuItem i_MenuItem)
+        {
+            m_MenuItems.Add(i_MenuItem);
+        }
 
+        protected void RunMenu()
+        {
+            bool quit = false;
 
-
-
-            //bool quit = false;
-
-            //while (!quit)
-            //{
-            //    ///show menus
-            //    string input = Console.ReadLine();
-            //    int choice = int.Parse(input);
-            //    m_Root.GetMehodByIndex(choice);
-            //    m_Root
-
-
+            while (!quit)
+            {
+                printMenu();
+                int choice = getUserChoice();
+                if (choice == 0)
+                {
+                    quit = true;
+                }
+                else
+                {
+                    m_MenuItems[choice - 1].ItemIsChosen();
+                }
             }
+        }
+
+        private void printMenu()
+        {
+            Console.Clear();
+            Console.WriteLine(m_MenuName);
+            for (int i = 0; i < m_MenuItems.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {m_MenuItems[i].MenuName}");
+            }
+
+            Console.WriteLine("0. Exit");
+        }
+
+        private int getUserChoice()
+        {
+            int userChoice;
+            int i_MaxValue = m_MenuItems.Count();
+            string input;
+
+            Console.WriteLine("Please enter your choice:");
+            input = Console.ReadLine();
+            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > i_MaxValue)
+            {
+                Console.WriteLine("Invalid choice. Please try again:");
+                input = Console.ReadLine();
+            }
+
+            return userChoice;
         }
     }
 }
