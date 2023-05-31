@@ -49,9 +49,11 @@ namespace Ex04.Menus.Delegates
                 if (choice == 0)
                 {
                     quit = true;
+                    Console.Clear();
                 }
                 else
                 {
+                    Console.Clear();
                     m_MenuItems[choice - 1].ItemIsChosen();
                 }
             }
@@ -59,7 +61,6 @@ namespace Ex04.Menus.Delegates
 
         private void printMenu()
         {
-            Console.Clear();
             Console.WriteLine(m_MenuName);
             for (int i = 0; i < m_MenuItems.Count; i++)
             {
