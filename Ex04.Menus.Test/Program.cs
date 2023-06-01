@@ -64,7 +64,7 @@ namespace Ex04.Menus.Test
             Interfaces.MenuItem showTimeMenu = new Interfaces.MenuItem("Show Time");
 
 
-            mainMenu.AddSubMenu(showDateMenu);
+            
             mainMenu.Show();
 
 
