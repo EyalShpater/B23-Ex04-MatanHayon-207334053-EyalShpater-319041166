@@ -11,10 +11,11 @@ namespace Ex04.Menus.Test
     {
         public static void Main()
         {
-            buildAndRunMenu();
+            BuildAndRunDelegatesMenu();
+            BuildAndRunInterfaceMenu();
         }
 
-        private static void buildAndRunMenu()
+        public static void BuildAndRunDelegatesMenu()
         {
             try
             {
@@ -53,19 +54,35 @@ namespace Ex04.Menus.Test
             }
         }
 
-        public static void showDateMenu_Selected()
+        public static void BuildAndRunInterfaceMenu()
         {
-            DateTime currentDate = DateTime.Today;
-            Console.WriteLine("Current Date: " + currentDate.ToString("yyyy-MM-dd"));
+            Interfaces.MainMenu mainMenu = new Interfaces.MainMenu();
+
+            Interfaces.MenuItem showDateMenu = new Interfaces.MenuItem("Show Date");
+            showDateMenu.AddLeafMethod(new ShowDateMethod());
+
+            Interfaces.MenuItem showTimeMenu = new Interfaces.MenuItem("Show Time");
+
+
+            mainMenu.AddSubMenu(showDateMenu);
+            mainMenu.Show();
+
+
         }
 
-        public static void showTimeMenu_Selected()
+        private static void showDateMenu_Selected()
+        {
+            DateTime currentDate = DateTime.Today;
+            Console.WriteLine("Current Date: " + currentDate.ToString("dd-MM-yyyy"));
+        }
+
+        private static void showTimeMenu_Selected()
         {
             DateTime currentTime = DateTime.Now;
             Console.WriteLine("Current Time: " + currentTime.ToString("HH:mm:ss"));
         }
 
-        public static void  countSpaces_Selected()
+        private static void  countSpaces_Selected()
         {
             string input;
 
@@ -89,7 +106,7 @@ namespace Ex04.Menus.Test
             return count;
         }
 
-        public static void showVersion_Selected()
+        private static void showVersion_Selected()
         {
             Console.WriteLine("Version: 23.2.4.9805");
         }
