@@ -18,31 +18,29 @@ namespace Ex04.Menus.Test
         {
             try
             {
-
-
                 Delegates.MainMenu mainMenu = new Delegates.MainMenu();
 
                 Delegates.MenuItem showDateMenu = new Delegates.MenuItem("Show Date");
-                showDateMenu.Selected += DisplayCurrentDate;
+                showDateMenu.Selected += showDateMenu_Selected;
 
                 Delegates.MenuItem showTimeMenu = new Delegates.MenuItem("Show Time");
-                showTimeMenu.Selected += DisplayCurrentTime;
+                showTimeMenu.Selected += showTimeMenu_Selected;
 
                 Delegates.MenuItem dateTimeMenu = new Delegates.MenuItem("Show Date/Time");
                 dateTimeMenu.AddSubMenu(showDateMenu);
                 dateTimeMenu.AddSubMenu(showTimeMenu);
-                mainMenu.AddComponent(dateTimeMenu);
 
                 Delegates.MenuItem countSpaces = new Delegates.MenuItem("Count Spaces");
-                countSpaces.Selected += DisplayNumOfSpacesInSentence;
+                countSpaces.Selected += countSpaces_Selected;
 
                 Delegates.MenuItem showVersion = new Delegates.MenuItem("Show Version");
-                showVersion.Selected += ShowVersion;
+                showVersion.Selected += showVersion_Selected;
 
                 Delegates.MenuItem versionsAndCapitalsMenu = new Delegates.MenuItem("Versions and Spaces");
                 versionsAndCapitalsMenu.AddSubMenu(showVersion);
                 versionsAndCapitalsMenu.AddSubMenu(countSpaces);
 
+                mainMenu.AddComponent(dateTimeMenu);
                 mainMenu.AddComponent(versionsAndCapitalsMenu);
                 mainMenu.Show();
             }
@@ -55,19 +53,19 @@ namespace Ex04.Menus.Test
             }
         }
 
-        public static void DisplayCurrentDate()
+        public static void showDateMenu_Selected()
         {
             DateTime currentDate = DateTime.Today;
             Console.WriteLine("Current Date: " + currentDate.ToString("yyyy-MM-dd"));
         }
 
-        public static void DisplayCurrentTime()
+        public static void showTimeMenu_Selected()
         {
             DateTime currentTime = DateTime.Now;
             Console.WriteLine("Current Time: " + currentTime.ToString("HH:mm:ss"));
         }
 
-        public static void  DisplayNumOfSpacesInSentence()
+        public static void  countSpaces_Selected()
         {
             string input;
 
@@ -91,7 +89,7 @@ namespace Ex04.Menus.Test
             return count;
         }
 
-        public static void ShowVersion()
+        public static void showVersion_Selected()
         {
             Console.WriteLine("Version: 23.2.4.9805");
         }

@@ -65,7 +65,7 @@ namespace Ex04.Menus.Delegates
                     else
                     {
                         Console.Clear();
-                        m_SubMenus[choice - 1].ItemIsChosen();
+                        m_SubMenus[choice - 1].OnSelected();
                     }
                 }
             }
@@ -108,21 +108,13 @@ namespace Ex04.Menus.Delegates
             return "Back";
         }
 
-        protected void ItemIsChosen()
+        protected virtual void OnSelected()
         {
             if (m_SubMenus != null)
             {
                 RunMenu();
             }
-            else
-            {
-                OnSelected();
-            }
-        }
-
-        protected void OnSelected()
-        {
-            if (Selected != null)
+            else if (Selected != null)
             {
                 Selected.Invoke();
             }
