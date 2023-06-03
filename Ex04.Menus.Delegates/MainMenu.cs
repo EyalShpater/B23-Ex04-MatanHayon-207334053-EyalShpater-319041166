@@ -7,7 +7,7 @@ namespace Ex04.Menus.Delegates
 {
     public class MainMenu : MenuItem
     {
-        private const string k_MainTitle = "Main Menu";
+        private const string k_MainTitle = "Delegates Main Menu";
 
         public MainMenu() : base(k_MainTitle)
         {

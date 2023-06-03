@@ -46,6 +46,29 @@ namespace Ex04.Menus.Interfaces
             m_SubMenus.Add(i_MenuItem);
         }
 
+        public void AddLeafMethod(ILeafMethod i_LeafMenu)
+        {
+            if (m_LeafMethods == null)
+            {
+                m_LeafMethods = new List<ILeafMethod>();
+            }
+
+            m_LeafMethods.Add(i_LeafMenu);
+        }
+
+        public void RemoveLeafMethod(ILeafMethod i_LeafMenu)
+        {
+            m_LeafMethods?.Remove(i_LeafMenu);
+        }
+
+        public void RunLeafMethods()
+        {
+            foreach (ILeafMethod method in m_LeafMethods)
+            {
+                method.WhenSelected();
+            }
+        }
+
         protected void RunMenu()
         {
             if (m_SubMenus != null)
@@ -54,8 +77,8 @@ namespace Ex04.Menus.Interfaces
 
                 while (!quit)
                 {
-                    PrintMenu();
-                    int choice = GetUserChoice();
+                    printMenu();
+                    int choice = getUserChoice();
                     if (choice == k_ReturnButton)
                     {
                         quit = true;
@@ -86,34 +109,6 @@ namespace Ex04.Menus.Interfaces
             }
         }
 
-        protected int GetUserChoice()
-        {
-            int userChoice;
-            int maxValue = m_SubMenus.Count;
-            string input;
-
-            Console.WriteLine("Please enter your choice:");
-            input = Console.ReadLine();
-            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > maxValue)
-            {
-                Console.WriteLine("Invalid choice. Please try again:");
-                input = Console.ReadLine();
-            }
-
-            return userChoice;
-        }
-
-        protected void PrintMenu()
-        {
-            printAsTitle(m_Title);
-            for (int i = 0; i < m_SubMenus.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {m_SubMenus[i].Title}");
-            }
-
-            Console.WriteLine("{0}. {1}", k_ReturnButton, GetReturnButton());
-        }
-
         protected virtual string GetReturnButton()
         {
             return "Back";
@@ -136,27 +131,32 @@ namespace Ex04.Menus.Interfaces
             Console.WriteLine();
         }
 
-        public void AddLeafMethod(ILeafMethod i_LeafMenu)
+        private int getUserChoice()
         {
-            if (m_LeafMethods == null)
+            int userChoice;
+            int numOfOptions = m_SubMenus.Count;
+            string input;
+
+            Console.WriteLine("Please enter your choice:");
+            input = Console.ReadLine();
+            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > numOfOptions)
             {
-                m_LeafMethods = new List<ILeafMethod>();
+                Console.WriteLine("Invalid choice. Please try again:");
+                input = Console.ReadLine();
             }
 
-            m_LeafMethods.Add(i_LeafMenu);
+            return userChoice;
         }
 
-        public void RemoveLeafMethod(ILeafMethod i_LeafMenu)
+        private void printMenu()
         {
-            m_LeafMethods?.Remove(i_LeafMenu);
-        }
-
-        public void RunLeafMethods()
-        {
-            foreach (ILeafMethod method in m_LeafMethods)
+            printAsTitle(m_Title);
+            for (int i = 0; i < m_SubMenus.Count; i++)
             {
-                method.WhenSelected();
+                Console.WriteLine($"{i + 1}. {m_SubMenus[i].Title}");
             }
+
+            Console.WriteLine("{0}. {1}", k_ReturnButton, GetReturnButton());
         }
     }
 }

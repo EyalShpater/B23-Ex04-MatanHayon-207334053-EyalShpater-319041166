@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Ex04.Menus.Delegates
 {
@@ -55,8 +54,8 @@ namespace Ex04.Menus.Delegates
 
                 while (!quit)
                 {
-                    PrintMenu();
-                    int choice = GetUserChoice();
+                    printMenu();
+                    int choice = getUserChoice();
                     if (choice == k_ReturnButton)
                     {
                         quit = true;
@@ -75,34 +74,6 @@ namespace Ex04.Menus.Delegates
             }
         }
 
-        protected int GetUserChoice()
-        {
-            int userChoice;
-            int maxValue = m_SubMenus.Count;
-            string input;
-
-            Console.WriteLine("Please enter your choice:");
-            input = Console.ReadLine();
-            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > maxValue)
-            {
-                Console.WriteLine("Invalid choice. Please try again:");
-                input = Console.ReadLine();
-            }
-
-            return userChoice;
-        }
-
-        protected void PrintMenu()
-        {
-            printAsTitle(m_Title);
-            for (int i = 0; i < m_SubMenus.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {m_SubMenus[i].Title}");
-            }
-
-            Console.WriteLine("{0}. {1}", k_ReturnButton, GetReturnButton());
-        }
-
         protected virtual string GetReturnButton()
         {
             return "Back";
@@ -118,6 +89,34 @@ namespace Ex04.Menus.Delegates
             {
                 Selected.Invoke();
             }
+        }
+
+        private int getUserChoice()
+        {
+            int userChoice;
+            int numOfOptions = m_SubMenus.Count;
+            string input;
+
+            Console.WriteLine("Please enter your choice:");
+            input = Console.ReadLine();
+            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > numOfOptions)
+            {
+                Console.WriteLine("Invalid choice. Please try again:");
+                input = Console.ReadLine();
+            }
+
+            return userChoice;
+        }
+
+        private void printMenu()
+        {
+            printAsTitle(m_Title);
+            for (int i = 0; i < m_SubMenus.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {m_SubMenus[i].Title}");
+            }
+
+            Console.WriteLine("{0}. {1}", k_ReturnButton, GetReturnButton());
         }
 
         private static void printAsTitle(string i_FunctionName)
