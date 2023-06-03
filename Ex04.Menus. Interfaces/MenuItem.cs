@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ex04.Menus.Interfaces
 {
@@ -11,7 +9,6 @@ namespace Ex04.Menus.Interfaces
         private const char k_TitlesChar = '*';
         protected List<MenuItem> m_SubMenus;
         protected List<ILeafMethod> m_LeafMethods;
-
         protected string m_Title;
 
         public MenuItem(string i_Title)
@@ -92,12 +89,12 @@ namespace Ex04.Menus.Interfaces
         protected int GetUserChoice()
         {
             int userChoice;
-            int i_MaxValue = m_SubMenus.Count();
+            int maxValue = m_SubMenus.Count;
             string input;
 
             Console.WriteLine("Please enter your choice:");
             input = Console.ReadLine();
-            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > i_MaxValue)
+            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > maxValue)
             {
                 Console.WriteLine("Invalid choice. Please try again:");
                 input = Console.ReadLine();

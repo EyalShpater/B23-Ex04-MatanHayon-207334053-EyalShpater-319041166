@@ -11,7 +11,6 @@ namespace Ex04.Menus.Delegates
 
         public MainMenu() : base(k_MainTitle)
         {
-
         }   
 
         public void Show()

@@ -78,12 +78,12 @@ namespace Ex04.Menus.Delegates
         protected int GetUserChoice()
         {
             int userChoice;
-            int i_MaxValue = m_SubMenus.Count();
+            int maxValue = m_SubMenus.Count;
             string input;
 
             Console.WriteLine("Please enter your choice:");
             input = Console.ReadLine();
-            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > i_MaxValue)
+            while (!int.TryParse(input, out userChoice) || userChoice < 0 || userChoice > maxValue)
             {
                 Console.WriteLine("Invalid choice. Please try again:");
                 input = Console.ReadLine();

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.PerformanceData;
 using System.Linq;
-using System.Text;
-using Ex04.Menus;
 
 namespace Ex04.Menus.Test
 {
@@ -39,9 +35,9 @@ namespace Ex04.Menus.Test
                 mainMenu.Show();
             }
 
-            catch (Exception i_Exception)
+            catch (Exception exception)
             {
-                Console.WriteLine(i_Exception.Message);
+                Console.WriteLine(exception.Message);
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadLine();
             }
@@ -71,9 +67,9 @@ namespace Ex04.Menus.Test
                 mainMenu.Show();
             }
 
-            catch (Exception i_Exception)
+            catch (Exception exception)
             {
-                Console.WriteLine(i_Exception.Message);
+                Console.WriteLine(exception.Message);
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadLine();
             }
@@ -91,7 +87,7 @@ namespace Ex04.Menus.Test
             Console.WriteLine("Current Time: " + currentTime.ToString("HH:mm:ss"));
         }
 
-        private static void  countSpaces_Selected()
+        private static void countSpaces_Selected()
         {
             string input;
 
