@@ -32,8 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CountSpacesMethod.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ShowDateMethod.cs" />
+    <Compile Include="ShowTimeMethod.cs" />
+    <Compile Include="ShowVersionMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex04.Menus. Interfaces\Ex04.Menus. Interfaces.csproj">

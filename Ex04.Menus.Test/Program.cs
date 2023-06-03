@@ -20,29 +20,22 @@ namespace Ex04.Menus.Test
             try
             {
                 Delegates.MainMenu mainMenu = new Delegates.MainMenu();
-
                 Delegates.MenuItem showDateMenu = new Delegates.MenuItem("Show Date");
                 showDateMenu.Selected += showDateMenu_Selected;
-
                 Delegates.MenuItem showTimeMenu = new Delegates.MenuItem("Show Time");
                 showTimeMenu.Selected += showTimeMenu_Selected;
-
                 Delegates.MenuItem dateTimeMenu = new Delegates.MenuItem("Show Date/Time");
                 dateTimeMenu.AddSubMenu(showDateMenu);
                 dateTimeMenu.AddSubMenu(showTimeMenu);
-
                 Delegates.MenuItem countSpaces = new Delegates.MenuItem("Count Spaces");
                 countSpaces.Selected += countSpaces_Selected;
-
                 Delegates.MenuItem showVersion = new Delegates.MenuItem("Show Version");
                 showVersion.Selected += showVersion_Selected;
-
-                Delegates.MenuItem versionsAndCapitalsMenu = new Delegates.MenuItem("Versions and Spaces");
-                versionsAndCapitalsMenu.AddSubMenu(showVersion);
-                versionsAndCapitalsMenu.AddSubMenu(countSpaces);
-
+                Delegates.MenuItem versionsAndSpacesMenu = new Delegates.MenuItem("Versions and Spaces");
+                versionsAndSpacesMenu.AddSubMenu(showVersion);
+                versionsAndSpacesMenu.AddSubMenu(countSpaces);
                 mainMenu.AddComponent(dateTimeMenu);
-                mainMenu.AddComponent(versionsAndCapitalsMenu);
+                mainMenu.AddComponent(versionsAndSpacesMenu);
                 mainMenu.Show();
             }
 
@@ -56,18 +49,34 @@ namespace Ex04.Menus.Test
 
         public static void BuildAndRunInterfaceMenu()
         {
-            Interfaces.MainMenu mainMenu = new Interfaces.MainMenu();
+            try
+            {
+                Interfaces.MainMenu mainMenu = new Interfaces.MainMenu();
+                Interfaces.MenuItem showDateMenu = new Interfaces.MenuItem("Show Date");
+                showDateMenu.AddLeafMethod(new ShowDateMethod());
+                Interfaces.MenuItem showTimeMenu = new Interfaces.MenuItem("Show Time");
+                showTimeMenu.AddLeafMethod(new ShowTimeMethod());
+                Interfaces.MenuItem dateTimeMenu = new Interfaces.MenuItem("Show Date/Time");
+                dateTimeMenu.AddSubMenu(showDateMenu);
+                dateTimeMenu.AddSubMenu(showTimeMenu);
+                Interfaces.MenuItem countSpaces = new Interfaces.MenuItem("Count Spaces");
+                countSpaces.AddLeafMethod(new CountSpacesMethod());
+                Interfaces.MenuItem showVersion = new Interfaces.MenuItem("Show Version");
+                showVersion.AddLeafMethod(new ShowVersionMethod());
+                Interfaces.MenuItem versionsAndSpacesMenu = new Interfaces.MenuItem("Versions and Spaces");
+                versionsAndSpacesMenu.AddSubMenu(showVersion);
+                versionsAndSpacesMenu.AddSubMenu(countSpaces);
+                mainMenu.AddSubMenu(dateTimeMenu);
+                mainMenu.AddSubMenu(versionsAndSpacesMenu);
+                mainMenu.Show();
+            }
 
-            Interfaces.MenuItem showDateMenu = new Interfaces.MenuItem("Show Date");
-            showDateMenu.AddLeafMethod(new ShowDateMethod());
-
-            Interfaces.MenuItem showTimeMenu = new Interfaces.MenuItem("Show Time");
-
-
-            
-            mainMenu.Show();
-
-
+            catch (Exception i_Exception)
+            {
+                Console.WriteLine(i_Exception.Message);
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+            }
         }
 
         private static void showDateMenu_Selected()

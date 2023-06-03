@@ -163,31 +163,3 @@ namespace Ex04.Menus.Interfaces
         }
     }
 }
-
-
-
-
-
-
-
-/*
- * 
- * void showTime();
- * 
- * 
- * public class ShowTime : ILeafMenu
- * {
- *      public WhenSelected()
- *      {
- *          show date...
- *      }
- * }
- * 
- * class Program()
- * {
- *      
- * }
- * 
- * 
- * 
- */
