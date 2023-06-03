@@ -9,6 +9,7 @@ namespace Ex04.Menus.Delegates
         private const char k_TitlesChar = '=';
         protected List<MenuItem> m_SubMenus;
         protected string m_Title;
+
         public event Action Selected;
 
         public MenuItem(string i_Title) 
